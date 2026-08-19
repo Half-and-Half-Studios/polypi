@@ -51,6 +51,32 @@
     color: white;
     border: none;
   }
+  .signup-box input.invalid {
+    border: 1px solid red;
+  }
+
+  .pw-wrap {
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .pw-wrap input {
+    margin-bottom: 0;
+    padding-right: 35px;
+  }
+
+  .pw-wrap button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+  }
 </style>
 </head>
 <body>
@@ -67,10 +93,43 @@
   <div class="signup-box">
     <h2>Sign Up</h2>
     <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
+    <input type="email" id="email" placeholder="Email" class="invalid" oninput="checkEmail()">
+
+    <div class="pw-wrap">
+      <input type="password" id="pw" placeholder="Password">
+      <button type="button" onclick="togglePw()" id="pwToggle">👁</button>
+    </div>
+
     <input type="password" placeholder="Confirm Password">
-    <button>Sign Up</button>
+
+    <div style="margin-bottom:10px;">
+      Gender:
+      <label><input type="radio" name="gender" value="male" style="width:auto;"> Male</label>
+      <label><input type="radio" name="gender" value="female" style="width:auto;"> Female</label>
+    </div>
+
+    <button>Sign up</button>
   </div>
+
+  <script>
+    function togglePw() {
+      var pw = document.getElementById('pw');
+      var btn = document.getElementById('pwToggle');
+      if (pw.type === 'password') {
+        pw.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        pw.type = 'password';
+        btn.textContent = '👁';
+      }
+    }
+
+    function checkEmail() {
+      var email = document.getElementById('email');
+      var valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email.value);
+      email.classList.toggle('invalid', !valid);
+    }
+  </script>
 
 </body>
 </html>
