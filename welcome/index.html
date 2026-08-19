@@ -32,9 +32,34 @@
     border: none;
   }
 
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    padding: 50px 20px;
+  }
+
+  .brand {
+    font-size: 110px;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    color: #222;
+    letter-spacing: -2px;
+    display: inline-block;
+  }
+
+  .brand .pi {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: bold;
+  }
+
   .signup-box {
     width: 300px;
-    margin: 50px auto;
+    margin: 0;
+    margin-left: 40px;
     background: white;
     padding: 20px;
     border: 1px solid #999;
@@ -105,12 +130,24 @@
     border: none;
     margin-top: 5px;
   }
+
+  .dob-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  .dob-row select {
+    flex: 1;
+    padding: 8px 4px;
+    border: 1px solid #ccc;
+  }
 </style>
 </head>
 <body>
 
   <header>
-    <div>Polyπ</div>
+    <div></div>
     <div>
       <input type="text" placeholder="Username">
       <input type="password" placeholder="Password">
@@ -118,7 +155,10 @@
     </div>
   </header>
 
-  <div class="signup-box">
+  <div class="hero">
+    <div class="brand">Poly<span class="pi">π</span></div>
+
+    <div class="signup-box">
     <h2>Sign Up</h2>
 
     <input type="text" id="username" placeholder="Username" oninput="checkUsername()">
@@ -134,7 +174,14 @@
     <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
     <div class="hint" id="pwHint">8+ characters, no spaces, 1 number, 1 symbol</div>
 
-    <input type="password" placeholder="Confirm Password">
+    <input type="password" id="confirmPw" placeholder="Confirm Password">
+
+    <div class="hint">Birth Date:</div>
+    <div class="dob-row">
+      <select id="dobMonth"></select>
+      <select id="dobDay"></select>
+      <select id="dobYear"></select>
+    </div>
 
     <div class="hint">Gender:
       <label><input type="radio" name="gender" value="male" style="width:auto;"> Male</label>
@@ -142,6 +189,7 @@
     </div>
 
     <button class="submit">Sign Up</button>
+  </div>
   </div>
 
   <script>
@@ -153,8 +201,17 @@
       " Yeah that checks out ",
       " add a couple of numbers to it or sum ",
       " that's funny ",
-      " boring aah username😐"
+      " boring aah username😐 "
     ];
+    
+    var blockedWords = ["fuck", "shit", "bitch", "asshole", "cunt", "dick", "pussy", "bastard", "slut", "whore", "nigger"];
+
+    function containsBlockedWord(val) {
+      var lower = val.toLowerCase();
+      return blockedWords.some(function(word) {
+        return lower.indexOf(word) !== -1;
+      });
+    }
 
     function checkUsername() {
       var username = document.getElementById('username');
@@ -163,11 +220,16 @@
 
       var allowedChars = /^[A-Za-z0-9_]*$/.test(val);
       var longEnough = val.length >= 3;
-      var valid = allowedChars && longEnough;
+      var blocked = containsBlockedWord(val);
+      var valid = allowedChars && longEnough && !blocked;
 
       if (val.length === 0) {
         username.classList.remove('invalid', 'valid');
         hint.textContent = 'at least 3 characters, letters/numbers only';
+      } else if (blocked) {
+        username.classList.add('invalid');
+        username.classList.remove('valid');
+        hint.textContent = 'that username isn\'t allowed';
       } else if (!allowedChars) {
         username.classList.add('invalid');
         username.classList.remove('valid');
@@ -186,14 +248,49 @@
 
     function togglePw() {
       var pw = document.getElementById('pw');
+      var confirmPw = document.getElementById('confirmPw');
       var btn = document.getElementById('pwToggle');
       if (pw.type === 'password') {
         pw.type = 'text';
+        confirmPw.type = 'text';
         btn.textContent = 'hide';
       } else {
         pw.type = 'password';
+        confirmPw.type = 'password';
         btn.textContent = 'show';
       }
+    }
+
+    var months = ["Month","January","February","March","April","May","June","July","August","September","October","November","December"];
+    var monthSelect = document.getElementById('dobMonth');
+    months.forEach(function(m, i) {
+      var opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = m;
+      monthSelect.appendChild(opt);
+    });
+
+    var daySelect = document.getElementById('dobDay');
+    var dayOpt0 = document.createElement('option');
+    dayOpt0.textContent = 'Day';
+    daySelect.appendChild(dayOpt0);
+    for (var d = 1; d <= 31; d++) {
+      var opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      daySelect.appendChild(opt);
+    }
+
+    var yearSelect = document.getElementById('dobYear');
+    var yearOpt0 = document.createElement('option');
+    yearOpt0.textContent = 'Year';
+    yearSelect.appendChild(yearOpt0);
+    var currentYear = new Date().getFullYear();
+    for (var y = currentYear; y >= currentYear - 100; y--) {
+      var opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      yearSelect.appendChild(opt);
     }
 
     function checkEmail() {
