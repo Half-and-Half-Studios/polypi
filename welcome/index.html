@@ -169,13 +169,14 @@
     <div class="hint" id="emailHint">example: name@domain.com</div>
 
     <div class="pw-wrap">
-      <input type="password" id="pw" placeholder="Password" oninput="checkPw()">
+      <input type="password" id="pw" placeholder="Password" oninput="checkPw(); checkConfirmPw();">
       <button type="button" onclick="togglePw()" id="pwToggle">show</button>
     </div>
     <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
     <div class="hint" id="pwHint">8+ characters, no spaces, 1 number, 1 symbol</div>
 
-    <input type="password" id="confirmPw" placeholder="Confirm Password">
+    <input type="password" id="confirmPw" placeholder="Confirm Password" oninput="checkConfirmPw()">
+    <div class="hint" id="confirmPwHint"></div>
 
     <div class="hint">Birth Date:</div>
     <div class="dob-row">
@@ -197,15 +198,16 @@
     var usernameComments = [
       "That's a cool username",
       "🥶🥶🥶",
-      " Yo that's a tuff username ",
-      " Aura ",
-      " Yeah that checks out ",
-      " add a couple of numbers to it or sum ",
-      " that's funny ",
-      " boring aah username😐 "
+      "Yo that's a tuff username ",
+      "Aura ",
+      "Yeah that checks out ",
+      "add a couple of numbers to it or sum ",
+      "that's funny ",
+      "boring aah username😐 ",
+      "love this thing"
     ];
     
-    var blockedWords = ["fuck", "shit", "bitch", "asshole", "cunt", "dick", "pussy", "bastard", "slut", "whore", "nigger", "idiot", "ass", "dumbass", "dumb", "bitchass", "kurva", "kokot", "debil", "prdel", "n1gger", "nigg3r", "nig", "n1g", "neckhurt"];
+    var blockedWords = ["fuck", "shit", "bitch", "asshole", "cunt", "dick", "pussy", "bastard", "slut", "whore", "nigger", "idiot", "ass", "dumbass", "dumb", "bitchass", "kurva", "kokot", "debil", "prdel", "n1gger", "nigg3r", "nig", "n1g", "neckhurt", "pica", "curak"];
 
     function containsBlockedWord(val) {
       var lower = val.toLowerCase();
@@ -354,6 +356,26 @@
         if (!hasNumber) missing.push('a number');
         if (!hasSymbol) missing.push('a symbol');
         hint.textContent = 'needs: ' + missing.join(', ');
+      }
+    }
+
+    function checkConfirmPw() {
+      var pw = document.getElementById('pw');
+      var confirmPw = document.getElementById('confirmPw');
+      var hint = document.getElementById('confirmPwHint');
+      var val = confirmPw.value;
+
+      if (val.length === 0) {
+        confirmPw.classList.remove('invalid', 'valid');
+        hint.textContent = '';
+      } else if (val !== pw.value) {
+        confirmPw.classList.add('invalid');
+        confirmPw.classList.remove('valid');
+        hint.textContent = 'passwords don\'t match';
+      } else {
+        confirmPw.classList.add('valid');
+        confirmPw.classList.remove('invalid');
+        hint.textContent = 'passwords match';
       }
     }
   </script>
