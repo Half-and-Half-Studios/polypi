@@ -57,6 +57,17 @@
     font-weight: bold;
   }
 
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .brand-icon {
+    height: 100px;
+    width: auto;
+  }
+
   .signup-box {
     width: 300px;
     margin: 0;
@@ -157,7 +168,10 @@
   </header>
 
   <div class="hero">
-    <div class="brand">Poly<span class="pi">π</span></div>
+    <div class="brand-row">
+      <img src="../Polyπ Icon.png" alt="Polyπ icon" class="brand-icon">
+      <div class="brand">Poly<span class="pi">π</span></div>
+    </div>
 
     <div class="signup-box">
     <h2>Sign Up</h2>
@@ -207,7 +221,7 @@
       "love this thing"
     ];
     
-    var blockedWords = ["fuck", "shit", "bitch", "asshole", "cunt", "dick", "pussy", "bastard", "slut", "whore", "nigger", "idiot", "ass", "dumbass", "dumb", "bitchass", "kurva", "kokot", "debil", "prdel", "n1gger", "nigg3r", "nig", "n1g", "neckhurt", "pica", "curak", "damn", "jackass", "crap", "motherfucker", "gay", "lesbian", "lgbtq", "trans", "dildo", "piss"]; //ye add more this aint enough for moderation
+    var blockedWords = ["fuck", "shit", "bitch", "asshole", "cunt", "dick", "pussy", "bastard", "slut", "whore", "nigger", "idiot", "ass", "dumbass", "dumb", "bitchass", "kurva", "kokot", "debil", "prdel", "n1gger", "nigg3r", "nig", "n1g", "neckhurt", "pica", "curak", "damn", "jackass", "crap", "motherfucker", "gay", "lesbian", "lgbtq", "trans", "dildo", "piss", "sex", "porn", "pedophile", "predator", "pedo"]; //ye add more this aint enough for moderation
 
     function containsBlockedWord(val) {
       var lower = val.toLowerCase();
