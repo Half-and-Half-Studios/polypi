@@ -6,7 +6,7 @@
 <style>
   body {
     font-family: Arial, sans-serif;
-    background: #f2f2f2;
+    background: #d9edf7;
     margin: 0;
   }
 
@@ -20,13 +20,16 @@
   }
 
   header input {
-    margin-left: 5px;
     padding: 5px;
+    margin-left: 5px;
   }
 
   header button {
     padding: 5px 10px;
     margin-left: 5px;
+    background: #2ecc71;
+    color: white;
+    border: none;
   }
 
   .signup-box {
@@ -34,48 +37,73 @@
     margin: 50px auto;
     background: white;
     padding: 20px;
+    border: 1px solid #999;
+  }
+
+  .signup-box h2 {
+    margin-top: 0;
+  }
+
+  .signup-box input[type="text"],
+  .signup-box input[type="email"],
+  .signup-box input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
     border: 1px solid #ccc;
   }
 
-  .signup-box input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-  }
-
-  .signup-box button {
-    width: 100%;
-    padding: 10px;
-    background: green;
-    color: white;
-    border: none;
-  }
   .signup-box input.invalid {
     border: 1px solid red;
   }
 
-  .pw-wrap {
-    position: relative;
+  .signup-box input.valid {
+    border: 1px solid green;
+  }
+
+  .hint {
+    font-size: 11px;
+    color: #666;
     margin-bottom: 10px;
   }
 
+  .pw-wrap {
+    position: relative;
+  }
+
   .pw-wrap input {
-    margin-bottom: 0;
     padding-right: 35px;
   }
 
   .pw-wrap button {
     position: absolute;
     right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
+    top: 6px;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 16px;
-    padding: 0;
+    font-size: 14px;
+  }
+
+  .strength-bar {
+    height: 6px;
+    background: #eee;
+    margin-bottom: 10px;
+  }
+
+  .strength-fill {
+    height: 100%;
+    width: 0%;
+  }
+
+  .signup-box button.submit {
+    width: 100%;
+    padding: 10px;
+    background: green;
+    color: white;
+    border: none;
+    margin-top: 5px;
   }
 </style>
 </head>
@@ -92,42 +120,118 @@
 
   <div class="signup-box">
     <h2>Sign Up</h2>
-    <input type="text" placeholder="Username">
-    <input type="email" id="email" placeholder="Email" class="invalid" oninput="checkEmail()">
+
+    <input type="text" id="username" placeholder="Username" oninput="checkUsername()">
+    <div class="hint" id="usernameHint">at least 3 characters</div>
+
+    <input type="email" id="email" placeholder="Email" oninput="checkEmail()">
+    <div class="hint" id="emailHint">example: name@domain.com</div>
 
     <div class="pw-wrap">
-      <input type="password" id="pw" placeholder="Password">
-      <button type="button" onclick="togglePw()" id="pwToggle">👁</button>
+      <input type="password" id="pw" placeholder="Password" oninput="checkPw()">
+      <button type="button" onclick="togglePw()" id="pwToggle">show</button>
     </div>
+    <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+    <div class="hint" id="pwHint">8+ characters, no spaces, 1 number, 1 symbol</div>
 
     <input type="password" placeholder="Confirm Password">
 
-    <div style="margin-bottom:10px;">
-      Gender:
+    <div class="hint">Gender:
       <label><input type="radio" name="gender" value="male" style="width:auto;"> Male</label>
       <label><input type="radio" name="gender" value="female" style="width:auto;"> Female</label>
     </div>
 
-    <button>Sign up</button>
+    <button class="submit">Sign Up</button>
   </div>
 
   <script>
+    function checkUsername() {
+      var username = document.getElementById('username');
+      var hint = document.getElementById('usernameHint');
+      var valid = username.value.length >= 3;
+
+      if (username.value.length === 0) {
+        username.classList.remove('invalid', 'valid');
+        hint.textContent = 'at least 3 characters';
+      } else if (valid) {
+        username.classList.add('valid');
+        username.classList.remove('invalid');
+        hint.textContent = 'looks good';
+      } else {
+        username.classList.add('invalid');
+        username.classList.remove('valid');
+        hint.textContent = 'needs at least 3 characters';
+      }
+    }
+
     function togglePw() {
       var pw = document.getElementById('pw');
       var btn = document.getElementById('pwToggle');
       if (pw.type === 'password') {
         pw.type = 'text';
-        btn.textContent = '🙈';
+        btn.textContent = 'hide';
       } else {
         pw.type = 'password';
-        btn.textContent = '👁';
+        btn.textContent = 'show';
       }
     }
 
     function checkEmail() {
       var email = document.getElementById('email');
+      var hint = document.getElementById('emailHint');
       var valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email.value);
-      email.classList.toggle('invalid', !valid);
+
+      if (email.value.length === 0) {
+        email.classList.remove('invalid', 'valid');
+        hint.textContent = 'example: name@domain.com';
+      } else if (valid) {
+        email.classList.add('valid');
+        email.classList.remove('invalid');
+        hint.textContent = 'looks good';
+      } else {
+        email.classList.add('invalid');
+        email.classList.remove('valid');
+        hint.textContent = 'enter a valid email like name@domain.com';
+      }
+    }
+
+    function checkPw() {
+      var pw = document.getElementById('pw');
+      var hint = document.getElementById('pwHint');
+      var fill = document.getElementById('strengthFill');
+      var val = pw.value;
+
+      var hasNumber = /[0-9]/.test(val);
+      var hasSymbol = /[^A-Za-z0-9]/.test(val);
+      var hasSpace = /\s/.test(val);
+      var longEnough = val.length >= 8;
+      var valid = hasNumber && hasSymbol && !hasSpace && longEnough;
+
+      var score = [hasNumber, hasSymbol, longEnough, val.length >= 12].filter(Boolean).length;
+      var pct = val.length === 0 ? 0 : Math.max(20, score * 25);
+      fill.style.width = pct + '%';
+      fill.style.background = val.length === 0 ? '#eee' : (!valid ? 'red' : (score < 4 ? 'orange' : 'green'));
+
+      if (val.length === 0) {
+        pw.classList.remove('invalid', 'valid');
+        hint.textContent = '8+ characters, no spaces, 1 number, 1 symbol';
+      } else if (hasSpace) {
+        pw.classList.add('invalid');
+        pw.classList.remove('valid');
+        hint.textContent = 'no spaces allowed';
+      } else if (valid) {
+        pw.classList.add('valid');
+        pw.classList.remove('invalid');
+        hint.textContent = 'looks good';
+      } else {
+        pw.classList.add('invalid');
+        pw.classList.remove('valid');
+        var missing = [];
+        if (!longEnough) missing.push('8+ characters');
+        if (!hasNumber) missing.push('a number');
+        if (!hasSymbol) missing.push('a symbol');
+        hint.textContent = 'needs: ' + missing.join(', ');
+      }
     }
   </script>
 
