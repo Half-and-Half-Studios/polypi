@@ -193,26 +193,33 @@
   .stats-box {
     background: white;
     border: 1px solid #999;
-    padding: 15px;
+    padding: 55px 15px;
     margin-top: 15px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
+    gap: 20px;
     text-align: center;
+  }
+
+  .stats-box > div {
+    min-width: 150px;
   }
 
   .stats-box div span {
     display: block;
   }
 
-  .stats-box .stat-num {
+  .stat-num {
     font-weight: bold;
     font-size: 20px;
     color: #222;
   }
 
-  .stats-box .stat-label {
-    font-size: 12px;
+  .stat-label {
+    font-size: 14px;
     color: #666;
+    margin-top: 8px;
   }
 
   .create-callout {
@@ -258,10 +265,12 @@
 <body>
 
   <header>
-    <div class="logo-small">Poly<span class="pi">π</span></div>
-    <div class="nav-links">
-      <a href="#discover">Discover</a>
-      <a href="#community">Community</a>
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <div class="logo-small">Poly<span class="pi">π</span></div>
+      <div class="nav-links">
+        <a href="#discover">Discover</a>
+        <a href="#community">Community</a>
+      </div>
     </div>
     <div>
       <input type="text" placeholder="Username">
@@ -300,7 +309,7 @@
   </div>
 
   <footer id="community">
-    <div>Poly<span class="pi">π</span> - © 2026</div>
+    <div>Poly<span class="pi">π</span></div>
     <div style="margin-top:8px;">
       <a href="#discover">Discover</a>
       <a href="#community">Community</a>
