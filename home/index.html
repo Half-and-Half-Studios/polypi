@@ -5,6 +5,10 @@
 <title>Polyπ - Home</title>
 <link rel="icon" type="image/png" href="../Polyπ Icon.png">
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   html, body {
     height: 100%;
   }
@@ -18,29 +22,20 @@
     min-height: 100vh;
   }
 
+  /* ---- header ---- */
   header {
     background: #222;
     color: white;
     padding: 15px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
   }
 
-  header .nav-links {
+  header .left-group {
     display: flex;
     align-items: center;
     gap: 18px;
-  }
-
-  header .nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-  }
-
-  header .nav-links a:hover {
-    text-decoration: underline;
   }
 
   header .logo-small {
@@ -50,8 +45,25 @@
     font-size: 22px;
   }
 
-  header .logo-small .pi {
-    font-style: italic;
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
+
+  header .login-area {
+    display: flex;
+    align-items: center;
   }
 
   header input {
@@ -67,14 +79,21 @@
     border: none;
   }
 
+  /* ---- hero ---- */
   .hero {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px;
-    padding: 50px 20px;
-    text-align: center;
     flex-direction: column;
+    text-align: center;
+    padding: 50px 20px;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
   }
 
   .brand {
@@ -84,20 +103,6 @@
     font-style: italic;
     color: #222;
     letter-spacing: -2px;
-    display: inline-block;
-  }
-
-  .brand .pi {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-style: italic;
-    font-weight: bold;
-  }
-
-  .brand-row {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    justify-content: center;
   }
 
   .brand-icon {
@@ -121,132 +126,73 @@
     border: none;
     color: white;
     cursor: pointer;
-    margin: 0 6px;
-  }
-
-  .btn-play {
     background: #2ecc71;
   }
 
-  .btn-create {
-    background: #3498db;
-  }
-
-  .section {
+  /* ---- content wrap ---- */
+  .content {
     max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px 20px;
+    width: 100%;
+    flex: 1;
   }
 
-  .section h2 {
+  .panel {
+    background: white;
+    border: 1px solid #999;
+    margin-bottom: 15px;
+  }
+
+  .panel-title {
     border-bottom: 2px solid #999;
-    padding-bottom: 8px;
-    color: #222;
-  }
-
-  .game-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 15px;
-  }
-
-  .game-box {
-    width: 190px;
-    background: white;
-    border: 1px solid #999;
-  }
-
-  .game-thumb {
-    height: 110px;
-    background: #ccc;
-  }
-
-  .game-box .game-title {
-    padding: 6px 8px 2px;
+    padding: 10px 14px;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 16px;
     color: #222;
   }
 
-  .game-box .game-plays {
-    padding: 0 8px 8px;
-    font-size: 11px;
-    color: #666;
+  .panel-body {
+    padding: 14px;
   }
 
-  .categories {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-  }
-
-  .categories span {
-    background: white;
-    border: 1px solid #999;
-    padding: 5px 12px;
-    font-size: 13px;
-    color: #222;
-  }
-
+  /* ---- stats ---- */
   .stats-box {
-    background: white;
-    border: 1px solid #999;
-    padding: 55px 15px;
-    margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 20px;
     text-align: center;
+    padding: 55px 15px;
   }
 
   .stats-box > div {
     min-width: 150px;
   }
 
-  .stats-box div span {
-    display: block;
-  }
-
   .stat-num {
+    display: block;
     font-weight: bold;
     font-size: 20px;
     color: #222;
   }
 
   .stat-label {
+    display: block;
     font-size: 14px;
     color: #666;
     margin-top: 8px;
   }
 
-  .create-callout {
-    background: white;
-    border: 1px solid #999;
-    padding: 20px;
-    margin-top: 15px;
-  }
-
-  .create-callout button {
-    padding: 10px 20px;
-    background: #3498db;
-    color: white;
-    border: none;
-    margin-top: 10px;
-  }
-
+  /* ---- empty states ---- */
   .empty-state {
-    background: white;
-    border: 1px solid #999;
-    padding: 25px;
-    margin-top: 15px;
     text-align: center;
     color: #666;
     font-size: 14px;
+    padding: 25px;
   }
 
+  /* ---- footer ---- */
   footer {
     background: #222;
     color: #ccc;
@@ -259,20 +205,21 @@
   footer a {
     color: #ccc;
     margin: 0 8px;
+    text-decoration: none;
   }
 </style>
 </head>
 <body>
 
   <header>
-    <div style="display: flex; align-items: center; gap: 18px;">
+    <div class="left-group">
       <div class="logo-small">Poly<span class="pi">π</span></div>
       <div class="nav-links">
         <a href="#discover">Discover</a>
         <a href="#community">Community</a>
       </div>
     </div>
-    <div>
+    <div class="login-area">
       <input type="text" placeholder="Username">
       <input type="password" placeholder="Password">
       <button>Log In</button>
@@ -286,30 +233,38 @@
     </div>
     <div class="tagline">Play theirs.</div>
     <div class="hero-buttons">
-      <button class="btn-play">Play Now</button>
+      <button>Play Now</button>
     </div>
   </div>
 
-  <div class="section">
-    <div class="stats-box">
-      <div><span class="stat-num">0</span><span class="stat-label">servers active</span></div>
-      <div><span class="stat-num">0</span><span class="stat-label">online now</span></div>
-      <div><span class="stat-num">0</span><span class="stat-label">new this week</span></div>
+  <div class="content">
+
+    <div class="panel">
+      <div class="stats-box">
+        <div><span class="stat-num">0</span><span class="stat-label">servers active</span></div>
+        <div><span class="stat-num">0</span><span class="stat-label">online now</span></div>
+        <div><span class="stat-num">0</span><span class="stat-label">new this week</span></div>
+      </div>
     </div>
-  </div>
 
-  <div class="section" id="discover">
-    <h2>Featured Games</h2>
-    <div class="empty-state">No featured games yet.</div>
-  </div>
+    <div class="panel" id="discover">
+      <div class="panel-title">Featured Games</div>
+      <div class="panel-body">
+        <div class="empty-state">No featured games yet.</div>
+      </div>
+    </div>
 
-  <div class="section">
-    <h2>Categories</h2>
-    <div class="empty-state">No categories yet.</div>
+    <div class="panel">
+      <div class="panel-title">Categories</div>
+      <div class="panel-body">
+        <div class="empty-state">No categories yet.</div>
+      </div>
+    </div>
+
   </div>
 
   <footer id="community">
-    <div>Poly<span class="pi">π</span></div>
+    <div class="logo-small">Poly<span class="pi">π</span></div>
     <div style="margin-top:8px;">
       <a href="#discover">Discover</a>
       <a href="#community">Community</a>
