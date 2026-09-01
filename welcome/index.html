@@ -303,7 +303,7 @@
     yearOpt0.textContent = 'Year';
     yearSelect.appendChild(yearOpt0);
     var currentYear = new Date().getFullYear();
-    for (var y = currentYear; y >= currentYear - 2000; y--) {
+    for (var y = currentYear; y >= currentYear - currentYear; y--) {
       var opt = document.createElement('option');
       opt.value = y;
       opt.textContent = y;
